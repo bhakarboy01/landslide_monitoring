@@ -1,0 +1,57 @@
+{
+  "camera_type": "pi_camera",
+  "image_directory": "./images",
+  "resolution": [2592, 1944],
+  "quality": 95,
+  "capture_interval_minutes": 60,
+  "enable_scheduler": true,
+  "max_images": 1000,
+  "image_prefix": "landslide",
+  "timezone": "UTC",
+  "cloud_upload": {
+    "enabled": false,
+    "provider": "aws_s3",
+    "upload_immediately": true,
+    "retry_failed_uploads": true,
+    "max_retries": 3,
+    "aws_s3": {
+      "enabled": false,
+      "bucket_name": "your-landslide-bucket",
+      "access_key": "your-aws-access-key",
+      "secret_key": "your-aws-secret-key",
+      "region": "us-east-1"
+    },
+    "google_drive": {
+      "enabled": false,
+      "credentials_file": "google_credentials.json",
+      "folder_id": "your-google-drive-folder-id"
+    },
+    "sftp": {
+      "enabled": false,
+      "hostname": "your-server.com",
+      "port": 22,
+      "username": "your-username",
+      "password": "your-password",
+      "key_file": "",
+      "remote_directory": "/uploads/landslide"
+    }
+  },
+  "web_interface": {
+    "enabled": true,
+    "host": "0.0.0.0",
+    "port": 5000,
+    "username": "admin",
+    "password": "landslide123"
+  },
+  "notifications": {
+    "email_enabled": false,
+    "email_smtp_server": "smtp.gmail.com",
+    "email_port": 587,
+    "email_username": "your-email@gmail.com",
+    "email_password": "your-app-password",
+    "email_recipients": ["alert@example.com"],
+    "webhook_enabled": false,
+    "webhook_url": "https://your-webhook-url.com/landslide-alert"
+  }
+}
+

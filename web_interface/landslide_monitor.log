@@ -1,0 +1,89 @@
+2025-06-11 01:38:08,216 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://169.254.0.21:5000
+2025-06-11 01:38:08,216 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-11 01:38:08,217 - INFO -  * Restarting with stat
+2025-06-11 01:38:08,553 - WARNING -  * Debugger is active!
+2025-06-11 01:38:08,553 - INFO -  * Debugger PIN: 175-915-211
+2025-06-11 01:39:47,825 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://169.254.0.21:5001
+2025-06-11 01:39:47,825 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-11 01:39:47,825 - INFO -  * Restarting with stat
+2025-06-11 01:39:48,176 - WARNING -  * Debugger is active!
+2025-06-11 01:39:48,177 - INFO -  * Debugger PIN: 130-096-462
+2025-06-11 01:40:21,013 - INFO - 127.0.0.1 - - [11/Jun/2025 01:40:21] "GET / HTTP/1.1" 200 -
+2025-06-11 01:40:21,058 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:40:21,060 - INFO - 127.0.0.1 - - [11/Jun/2025 01:40:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:40:21,060 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:40:21,060 - INFO - 127.0.0.1 - - [11/Jun/2025 01:40:21] "GET /api/logs HTTP/1.1" 200 -
+2025-06-11 01:40:21,061 - INFO - 127.0.0.1 - - [11/Jun/2025 01:40:21] "[35m[1mGET /api/images HTTP/1.1[0m" 500 -
+2025-06-11 01:40:21,221 - INFO - 127.0.0.1 - - [11/Jun/2025 01:40:21] "GET /favicon.ico HTTP/1.1" 200 -
+2025-06-11 01:40:29,417 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:40:29,418 - INFO - 127.0.0.1 - - [11/Jun/2025 01:40:29] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:40:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:40:51,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:40:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:41:21,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:41:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:41:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:41:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:41:51,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:41:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:42:21,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:42:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:42:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:42:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:42:51,063 - INFO - 127.0.0.1 - - [11/Jun/2025 01:42:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:43:21,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:43:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:43:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:43:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:43:51,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:43:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:44:21,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:44:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:44:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:44:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:44:51,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:44:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:45:16,135 - INFO -  * Detected change in '/home/ubuntu/landslide_web/src/routes/landslide.py', reloading
+2025-06-11 01:45:16,211 - INFO -  * Restarting with stat
+2025-06-11 01:45:16,565 - WARNING -  * Debugger is active!
+2025-06-11 01:45:16,565 - INFO -  * Debugger PIN: 130-096-462
+2025-06-11 01:45:21,064 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:45:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:45:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:45:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:45:51,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:45:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:46:21,064 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:46:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:46:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:46:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:46:51,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:46:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:47:21,064 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:47:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:47:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:47:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:47:51,063 - INFO - 127.0.0.1 - - [11/Jun/2025 01:47:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:48:21,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:48:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:48:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:48:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:48:51,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:48:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:49:21,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:49:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:49:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:49:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:49:51,063 - INFO - 127.0.0.1 - - [11/Jun/2025 01:49:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:50:21,064 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:50:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:50:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:50:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:50:51,063 - INFO - 127.0.0.1 - - [11/Jun/2025 01:50:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:51:21,064 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:51:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:51:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:51:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:51:51,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:51:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:52:21,067 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:52:21,068 - INFO - 127.0.0.1 - - [11/Jun/2025 01:52:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:52:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:52:51,063 - INFO - 127.0.0.1 - - [11/Jun/2025 01:52:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:53:21,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:53:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:53:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:53:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:53:51,063 - INFO - 127.0.0.1 - - [11/Jun/2025 01:53:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:54:21,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:54:21,063 - INFO - 127.0.0.1 - - [11/Jun/2025 01:54:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:54:51,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:54:51,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:54:51] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -
+2025-06-11 01:55:21,063 - INFO - Configuration loaded from /home/ubuntu/landslide_web/config.json
+2025-06-11 01:55:21,064 - INFO - 127.0.0.1 - - [11/Jun/2025 01:55:21] "[35m[1mGET /api/status HTTP/1.1[0m" 500 -

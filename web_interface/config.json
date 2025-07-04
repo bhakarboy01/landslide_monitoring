@@ -1,0 +1,35 @@
+{
+  "camera_type": "pi_camera",
+  "image_directory": "./images",
+  "resolution": [2592, 1944],
+  "quality": 95,
+  "capture_interval_minutes": 60,
+  "enable_scheduler": true,
+  "max_images": 1000,
+  "image_prefix": "landslide",
+  "timezone": "UTC",
+  "cloud_upload": {
+    "enabled": false,
+    "provider": "aws_s3",
+    "bucket_name": "",
+    "access_key": "",
+    "secret_key": "",
+    "region": "us-east-1"
+  },
+  "web_interface": {
+    "enabled": true,
+    "host": "0.0.0.0",
+    "port": 5000,
+    "username": "admin",
+    "password": "landslide123"
+  },
+  "notifications": {
+    "email_enabled": false,
+    "email_smtp_server": "",
+    "email_port": 587,
+    "email_username": "",
+    "email_password": "",
+    "email_recipients": []
+  }
+}
+
