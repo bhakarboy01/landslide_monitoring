@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Landslide Monitoring System - Camera Control Module
-This script handles camera operations for both Raspberry Pi Camera and DSLR cameras
+This script handles camera operations for DSLR cameras
 """
 
 import os
@@ -15,9 +15,9 @@ from typing import Optional, Dict, Any
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
+    format=\'%(asctime)s - %(levelname)s - %(message)s\',
     handlers=[
-        logging.FileHandler('landslide_monitor.log'),
+        logging.FileHandler(\'landslide_monitor.log\'),
         logging.StreamHandler()
     ]
 )
@@ -28,7 +28,7 @@ class CameraController:
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
-        self.image_dir = Path(config.get('image_directory', './images'))
+        self.image_dir = Path(config.get(\'image_directory\', \'./images\'))
         self.image_dir.mkdir(exist_ok=True)
         
     def capture_image(self, filename: Optional[str] = None) -> str:
@@ -38,79 +38,6 @@ class CameraController:
     def get_status(self) -> Dict[str, Any]:
         """Get camera status information"""
         return {"status": "unknown", "type": "base"}
-
-class PiCameraController(CameraController):
-    """Controller for Raspberry Pi Camera Module"""
-    
-    def __init__(self, config: Dict[str, Any]):
-        super().__init__(config)
-        try:
-            # Try importing picamera2 (newer) first, then fall back to picamera
-            try:
-                from picamera2 import Picamera2
-                self.camera = Picamera2()
-                self.camera_type = "picamera2"
-                logger.info("Using picamera2 library")
-            except ImportError:
-                from picamera import PiCamera
-                self.camera = PiCamera()
-                self.camera_type = "picamera"
-                logger.info("Using legacy picamera library")
-                
-            self.resolution = config.get('resolution', (2592, 1944))
-            self.quality = config.get('quality', 95)
-            
-            if self.camera_type == "picamera2":
-                self.camera.configure(self.camera.create_still_configuration())
-                self.camera.start()
-            else:
-                self.camera.resolution = self.resolution
-                
-        except Exception as e:
-            logger.error(f"Failed to initialize Pi Camera: {e}")
-            raise
-    
-    def capture_image(self, filename: Optional[str] = None) -> str:
-        """Capture an image using Pi Camera"""
-        if filename is None:
-            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            filename = f"landslide_{timestamp}.jpg"
-        
-        filepath = self.image_dir / filename
-        
-        try:
-            if self.camera_type == "picamera2":
-                self.camera.capture_file(str(filepath))
-            else:
-                self.camera.capture(str(filepath), quality=self.quality)
-                
-            logger.info(f"Image captured: {filepath}")
-            return str(filepath)
-            
-        except Exception as e:
-            logger.error(f"Failed to capture image: {e}")
-            raise
-    
-    def get_status(self) -> Dict[str, Any]:
-        """Get Pi Camera status"""
-        return {
-            "status": "active",
-            "type": "pi_camera",
-            "library": self.camera_type,
-            "resolution": self.resolution,
-            "quality": self.quality
-        }
-    
-    def __del__(self):
-        """Cleanup camera resources"""
-        try:
-            if hasattr(self, 'camera'):
-                if self.camera_type == "picamera2":
-                    self.camera.stop()
-                else:
-                    self.camera.close()
-        except:
-            pass
 
 class DSLRController(CameraController):
     """Controller for DSLR cameras using gphoto2"""
@@ -146,7 +73,7 @@ class DSLRController(CameraController):
                 timeout=10
             )
             if result.returncode == 0 and "usb:" in result.stdout:
-                lines = result.stdout.strip().split('\n')
+                lines = result.stdout.strip().split(\'\\n\')
                 for line in lines:
                     if "usb:" in line:
                         return line.split()[0]
@@ -221,23 +148,14 @@ class DSLRController(CameraController):
 
 def create_camera_controller(config: Dict[str, Any]) -> CameraController:
     """Factory function to create appropriate camera controller"""
-    camera_type = config.get('camera_type', 'pi_camera')
-    
-    if camera_type == 'pi_camera':
-        return PiCameraController(config)
-    elif camera_type == 'dslr':
-        return DSLRController(config)
-    else:
-        raise ValueError(f"Unsupported camera type: {camera_type}")
+    return DSLRController(config)
 
 # Example usage and testing
 if __name__ == "__main__":
     # Example configuration
     config = {
-        'camera_type': 'pi_camera',  # or 'dslr'
-        'image_directory': './images',
-        'resolution': (2592, 1944),
-        'quality': 95
+        \'camera_type\': \'dslr\',  # Only DSLR supported now
+        \'image_directory\': \'./images\',
     }
     
     try:
@@ -256,4 +174,5 @@ if __name__ == "__main__":
     except Exception as e:
         logger.error(f"Error in camera test: {e}")
         print(f"Error: {e}")
+
 

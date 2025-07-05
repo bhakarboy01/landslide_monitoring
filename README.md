@@ -1,15 +1,15 @@
-# Landslide Monitoring System v1.0
+# Landslide Monitoring System v1.0 (DSLR-Only)
 
 ## Complete Project Package
 
-This package contains the complete Landslide Monitoring System with all components, documentation, and setup tools needed for deployment.
+This package contains the complete Landslide Monitoring System, now specialized for DSLR camera control, along with documentation and setup tools needed for deployment.
 
 ### Package Contents
 
 ```
 landslide_monitoring_system_v1.0/
-├── core/                           # Core system modules
-│   ├── camera_controller.py        # Camera interface and control
+├── core/                           # Core system modules (DSLR camera control, scheduler, AI detection, cloud storage)
+│   ├── camera_controller.py        # DSLR Camera interface and control
 │   ├── scheduler.py                # Basic scheduling system
 │   ├── enhanced_scheduler.py       # Advanced scheduler with cloud integration
 │   ├── ai_landslide_detector.py    # AI detection engine
@@ -33,42 +33,93 @@ landslide_monitoring_system_v1.0/
 └── README.md                      # This file
 ```
 
-### Quick Start
+### Quick Start: Raspberry Pi Deployment (DSLR Camera)
 
-1. **Hardware Setup:**
-   - Assemble Raspberry Pi with camera module or DSLR
-   - Install in weatherproof enclosure
-   - Connect power and network
+This guide assumes you have a Raspberry Pi (4 recommended) with Raspberry Pi OS (Bullseye or later) installed, and a compatible DSLR camera connected via USB.
 
-2. **Software Installation:**
-   ```bash
-   cd setup_scripts
-   chmod +x setup.sh
-   sudo ./setup.sh
-   ```
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/bhakarboy01/landslide_monitoring.git
+    cd landslide_monitoring
+    ```
 
-3. **Configuration:**
-   ```bash
-   cp config/config.json .
-   nano config.json  # Edit for your deployment
-   ```
+2.  **Run the Setup Script:**
+    This script will install necessary system dependencies (including `gphoto2` for DSLR control) and set up a Python virtual environment.
+    ```bash
+    chmod +x setup_scripts/setup.sh
+    sudo ./setup_scripts/setup.sh
+    ```
+    *During the setup, you will be prompted to test the camera and set up a system service. You can choose 'n' for now and configure these later.* 
 
-4. **Start System:**
-   ```bash
-   sudo systemctl start landslide-monitor
-   sudo systemctl enable landslide-monitor
-   ```
+3.  **Configure the System:**
+    Edit `config/config.json` to customize settings such as image directory, capture intervals, and cloud storage options. Ensure `"camera_type": "dslr"` is set.
+    ```bash
+    nano config/config.json
+    ```
 
-5. **Access Web Interface:**
-   - Navigate to http://[PI_IP]:5001
-   - Configure and monitor system
+4.  **Test Camera Capture:**
+    Ensure your DSLR is connected and powered on. Then, activate the virtual environment and run a test capture:
+    ```bash
+    source venv/bin/activate
+    python3 core/camera_controller.py
+    ```
+    This will attempt to capture a test image. Check the `./images` directory for the captured photo.
 
-### Key Features
+5.  **Start Monitoring:**
+    To start the monitoring system, activate the virtual environment and run the scheduler:
+    ```bash
+    source venv/bin/activate
+    python3 core/scheduler.py
+    ```
+    For automatic startup on boot, you can enable the systemd service (if you chose not to during setup):
+    ```bash
+    sudo systemctl enable landslide-monitor.service
+    sudo systemctl start landslide-monitor.service
+    ```
+
+### Cloud Photo Access Setup
+
+The system supports uploading captured images to cloud storage (AWS S3, Google Drive, SFTP). Here's a general overview of the process:
+
+1.  **Choose Your Cloud Provider:** Decide which cloud service you want to use (AWS S3, Google Drive, or SFTP).
+
+2.  **Obtain Credentials:**
+    *   **AWS S3:** You'll need an AWS account, an S3 bucket, and IAM user credentials (Access Key ID and Secret Access Key) with permissions to write to the bucket.
+    *   **Google Drive:** You'll need a Google Cloud project, enable the Google Drive API, and create a service account key (JSON file) with access to your Google Drive folder.
+    *   **SFTP:** You'll need an SFTP server address, username, and password/SSH key.
+
+3.  **Configure `config.json`:**
+    Open `config/config.json` and locate the `cloud_storage` section. Update the `enabled` flag to `true` and fill in the details for your chosen provider. Example for AWS S3:
+    ```json
+    "cloud_storage": {
+        "enabled": true,
+        "provider": "aws_s3",
+        "aws_s3": {
+            "bucket_name": "your-s3-bucket-name",
+            "access_key_id": "YOUR_AWS_ACCESS_KEY_ID",
+            "secret_access_key": "YOUR_AWS_SECRET_ACCESS_KEY",
+            "region": "your-aws-region"
+        }
+    }
+    ```
+    *Refer to `documentation/landslide_monitoring_documentation.pdf` for detailed configuration examples for each cloud provider.*
+
+4.  **Run Cloud Setup Script (Optional but Recommended):**
+    The `setup_cloud.sh` script can help with some cloud-specific configurations, especially for Google Drive authentication.
+    ```bash
+    chmod +x setup_scripts/setup_cloud.sh
+    sudo ./setup_scripts/setup_cloud.sh
+    ```
+
+5.  **Verify Uploads:**
+    After starting the monitoring system, captured images should automatically be uploaded to your configured cloud storage. Check your cloud storage to verify.
+
+### Key Features (DSLR-Focused)
 
 ✅ **Automated Image Capture**
 - Configurable intervals (1 minute to hours)
-- Support for Pi Camera and DSLR cameras
-- Remote zoom and camera control
+- Support for DSLR cameras only
+- Remote zoom and camera control (if supported by DSLR)
 
 ✅ **AI-Powered Detection**
 - Real-time landslide detection
@@ -100,7 +151,7 @@ landslide_monitoring_system_v1.0/
 **Hardware:**
 - Raspberry Pi 4 (4GB RAM recommended)
 - MicroSD card (32GB minimum)
-- Camera (Pi Camera Module v1.3 or compatible DSLR)
+- Compatible DSLR Camera (with USB connectivity and `gphoto2` support)
 - Power supply or battery system
 - Network connectivity (Wi-Fi, Ethernet, or cellular)
 
@@ -112,13 +163,13 @@ landslide_monitoring_system_v1.0/
 ### Documentation
 
 **Complete Technical Manual:** `documentation/landslide_monitoring_documentation.pdf`
-- 15,000+ words of comprehensive documentation
+- Comprehensive documentation for DSLR-focused deployment
 - Installation, configuration, and operation procedures
 - Troubleshooting and maintenance guides
 - Technical specifications and performance data
 
 **Quick Start Guide:** `documentation/quick_start_guide.md`
-- Rapid deployment checklist
+- Rapid deployment checklist for DSLR-only setup
 - Essential configuration steps
 - Field installation procedures
 
@@ -144,7 +195,8 @@ This project is provided under open source licensing for research and educationa
 ---
 
 **Developed by:** Manus AI  
-**Project Type:** Landslide Monitoring and Detection System  
-**Target Platform:** Raspberry Pi with Camera Integration  
+**Project Type:** Landslide Monitoring and Detection System (DSLR-Focused)  
+**Target Platform:** Raspberry Pi with DSLR Camera Integration  
 **Deployment:** Remote geological monitoring applications
+
 

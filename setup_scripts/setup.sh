@@ -29,15 +29,6 @@ print_error() {
 }
 
 # Check if running on Raspberry Pi
-check_raspberry_pi() {
-    if [[ -f /proc/device-tree/model ]] && grep -q "Raspberry Pi" /proc/device-tree/model; then
-        print_status "Running on Raspberry Pi"
-        return 0
-    else
-        print_warning "Not running on Raspberry Pi - some features may not work"
-        return 1
-    fi
-}
 
 # Update system packages
 update_system() {
@@ -78,20 +69,6 @@ install_system_deps() {
     # Install gphoto2 for DSLR support
     print_status "Installing gphoto2 for DSLR camera support..."
     sudo apt-get install -y gphoto2 libgphoto2-dev
-    
-    # Install camera-specific packages for Raspberry Pi
-    if check_raspberry_pi; then
-        print_status "Installing Raspberry Pi camera support..."
-        sudo apt-get install -y \
-            python3-picamera \
-            python3-picamera2 \
-            libcamera-apps \
-            libcamera-dev
-        
-        # Enable camera interface
-        print_status "Enabling camera interface..."
-        sudo raspi-config nonint do_camera 0
-    fi
 }
 
 # Create Python virtual environment
@@ -122,10 +99,7 @@ setup_python_env() {
         paramiko \
         python-crontab
     
-    # Try to install picamera2 if on Raspberry Pi
-    if check_raspberry_pi; then
-        pip install picamera2 || print_warning "Could not install picamera2 via pip"
-    fi
+
 }
 
 # Create necessary directories
@@ -155,7 +129,7 @@ User=pi
 Group=pi
 WorkingDirectory=$CURRENT_DIR
 Environment=PATH=$CURRENT_DIR/venv/bin
-ExecStart=$CURRENT_DIR/venv/bin/python $CURRENT_DIR/scheduler.py --daemon
+ExecStart=$CURRENT_DIR/venv/bin/python $CURRENT_DIR/core/scheduler.py --daemon
 Restart=always
 RestartSec=10
 
@@ -175,7 +149,7 @@ test_camera() {
     
     source venv/bin/activate
     
-    if python3 camera_controller.py; then
+    if python3 core/camera_controller.py; then
         print_status "Camera test successful!"
     else
         print_error "Camera test failed. Please check your camera connection."
@@ -218,8 +192,13 @@ EOF
 main() {
     print_status "Starting setup process..."
     
+    # Change to the parent directory (landslide_monitoring) if currently in setup_scripts
+    if [[ "$(basename "$PWD")" == "setup_scripts" ]]; then
+        cd ..
+    fi
+    
     # Check if script is run from the correct directory
-    if [[ ! -f "camera_controller.py" ]] || [[ ! -f "scheduler.py" ]]; then
+    if [[ ! -f "core/camera_controller.py" ]] || [[ ! -f "core/scheduler.py" ]]; then
         print_error "Please run this script from the directory containing the landslide monitoring files"
         exit 1
     fi

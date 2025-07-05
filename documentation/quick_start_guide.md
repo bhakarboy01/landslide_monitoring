@@ -1,15 +1,15 @@
-# Quick Start Deployment Guide
+# Quick Start Deployment Guide (DSLR-Only)
 
 ## Landslide Monitoring System - Quick Deployment
 
-This guide provides step-by-step instructions for rapidly deploying the Landslide Monitoring System in the field.
+This guide provides step-by-step instructions for rapidly deploying the Landslide Monitoring System with a DSLR camera in the field.
 
 ### Prerequisites Checklist
 
 **Hardware Required:**
 - [ ] Raspberry Pi 4 (4GB RAM recommended)
 - [ ] MicroSD card (32GB minimum, Class 10)
-- [ ] Raspberry Pi Camera Module v1.3 OR DSLR camera with USB cable
+- [ ] Compatible DSLR camera with USB cable (ensure `gphoto2` support)
 - [ ] Power supply (5V 3A for Pi 4) OR battery pack OR solar panel system
 - [ ] Weatherproof enclosure (IP65 rated minimum)
 - [ ] Network connectivity (Wi-Fi, Ethernet, or cellular modem)
@@ -25,7 +25,7 @@ This guide provides step-by-step instructions for rapidly deploying the Landslid
    ```bash
    # Download Raspberry Pi OS Lite from official website
    # Use Raspberry Pi Imager to flash to microSD card
-   # Enable SSH by creating empty 'ssh' file in boot partition
+   # Enable SSH by creating empty \'ssh\' file in boot partition
    ```
 
 2. **Configure Wi-Fi (if needed):**
@@ -36,8 +36,8 @@ This guide provides step-by-step instructions for rapidly deploying the Landslid
    update_config=1
    
    network={
-       ssid="YourNetworkName"
-       psk="YourPassword"
+       ssid=\"YourNetworkName\"
+       psk=\"YourPassword\"
    }
    ```
 
@@ -55,7 +55,6 @@ This guide provides step-by-step instructions for rapidly deploying the Landslid
    ```bash
    sudo apt update && sudo apt upgrade -y
    sudo raspi-config
-   # Enable camera interface
    # Expand filesystem
    # Set timezone
    ```
@@ -66,31 +65,23 @@ This guide provides step-by-step instructions for rapidly deploying the Landslid
    git clone [repository_url] landslide_monitoring
    cd landslide_monitoring
    
-   # Run installation script
-   chmod +x setup.sh
-   sudo ./setup.sh
-   ```
-
-3. **Configure Camera:**
-   ```bash
-   # Test Pi Camera
-   raspistill -o test.jpg
-   
-   # OR test DSLR camera
-   gphoto2 --capture-image-and-download
+   # Run installation script (installs gphoto2 and Python dependencies)
+   chmod +x setup_scripts/setup.sh
+   sudo ./setup_scripts/setup.sh
    ```
 
 ### Step 3: Basic Configuration
 
 1. **Edit Configuration File:**
    ```bash
-   nano config.json
+   nano config/config.json
    ```
 
 2. **Essential Settings:**
+   Ensure `"camera_type": "dslr"` is set. Example:
    ```json
    {
-     "camera_type": "pi_camera",
+     "camera_type": "dslr",
      "capture_interval_minutes": 60,
      "image_quality": 95,
      "location": "Your Site Name",
@@ -101,17 +92,31 @@ This guide provides step-by-step instructions for rapidly deploying the Landslid
    }
    ```
 
-3. **Start System:**
+3. **Test Camera Capture:**
+   Ensure your DSLR is connected and powered on. Then, activate the virtual environment and run a test capture:
    ```bash
-   sudo systemctl start landslide-monitor
-   sudo systemctl enable landslide-monitor
+   source venv/bin/activate
+   python3 core/camera_controller.py
+   ```
+   This will attempt to capture a test image. Check the `./images` directory for the captured photo.
+
+4. **Start System:**
+   To start the monitoring system, activate the virtual environment and run the scheduler:
+   ```bash
+   source venv/bin/activate
+   python3 core/scheduler.py
+   ```
+   For automatic startup on boot, you can enable the systemd service:
+   ```bash
+   sudo systemctl enable landslide-monitor.service
+   sudo systemctl start landslide-monitor.service
    ```
 
 ### Step 4: Web Interface Setup
 
 1. **Start Web Interface:**
    ```bash
-   cd landslide_web
+   cd web_interface
    source venv/bin/activate
    python src/main.py
    ```
@@ -124,18 +129,37 @@ This guide provides step-by-step instructions for rapidly deploying the Landslid
 
 ### Step 5: Cloud Storage Setup
 
-1. **AWS S3 Configuration:**
-   ```bash
-   # Run cloud setup script
-   ./setup_cloud.sh
-   # Follow prompts for AWS credentials
-   ```
+1. **Choose Your Cloud Provider:** Decide which cloud service you want to use (AWS S3, Google Drive, or SFTP).
 
-2. **Test Upload:**
-   ```bash
-   # Capture and upload test image
-   python test_system.py
-   ```
+2. **Obtain Credentials:**
+    *   **AWS S3:** You\'ll need an AWS account, an S3 bucket, and IAM user credentials (Access Key ID and Secret Access Key) with permissions to write to the bucket.
+    *   **Google Drive:** You\'ll need a Google Cloud project, enable the Google Drive API, and create a service account key (JSON file) with access to your Google Drive folder.
+    *   **SFTP:** You\'ll need an SFTP server address, username, and password/SSH key.
+
+3.  **Configure `config.json`:**
+    Open `config/config.json` and locate the `cloud_storage` section. Update the `enabled` flag to `true` and fill in the details for your chosen provider. Example for AWS S3:
+    ```json
+    "cloud_storage": {
+        "enabled": true,
+        "provider": "aws_s3",
+        "aws_s3": {
+            "bucket_name": "your-s3-bucket-name",
+            "access_key_id": "YOUR_AWS_ACCESS_KEY_ID",
+            "secret_access_key": "YOUR_AWS_SECRET_ACCESS_KEY",
+            "region": "your-aws-region"
+        }
+    }
+    ```
+
+4.  **Run Cloud Setup Script (Optional but Recommended):**
+    The `setup_cloud.sh` script can help with some cloud-specific configurations, especially for Google Drive authentication.
+    ```bash
+    chmod +x setup_scripts/setup_cloud.sh
+    sudo ./setup_scripts/setup_cloud.sh
+    ```
+
+5.  **Verify Uploads:**
+    After starting the monitoring system, captured images should automatically be uploaded to your configured cloud storage. Check your cloud storage to verify.
 
 ### Step 6: Field Deployment
 
@@ -161,7 +185,7 @@ This guide provides step-by-step instructions for rapidly deploying the Landslid
 **Camera Not Working:**
 ```bash
 # Check camera connection
-vcgencmd get_camera
+gphoto2 --auto-detect
 
 # Restart camera service
 sudo systemctl restart landslide-monitor
@@ -220,4 +244,5 @@ sudo systemctl restart landslide-monitor
 - [ ] System monitoring established
 
 **For detailed information, refer to the complete documentation PDF.**
+
 
