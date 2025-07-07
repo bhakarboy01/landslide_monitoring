@@ -15,9 +15,9 @@ from typing import Optional, Dict, Any
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format=\'%(asctime)s - %(levelname)s - %(message)s\',
+    format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler(\'landslide_monitor.log\'),
+        logging.FileHandler('landslide_monitor.log'),
         logging.StreamHandler()
     ]
 )
@@ -28,7 +28,7 @@ class CameraController:
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
-        self.image_dir = Path(config.get(\'image_directory\', \'./images\'))
+        self.image_dir = Path(config.get('image_directory', './images'))
         self.image_dir.mkdir(exist_ok=True)
         
     def capture_image(self, filename: Optional[str] = None) -> str:
@@ -73,7 +73,7 @@ class DSLRController(CameraController):
                 timeout=10
             )
             if result.returncode == 0 and "usb:" in result.stdout:
-                lines = result.stdout.strip().split(\'\\n\')
+                lines = result.stdout.strip().split('\n')
                 for line in lines:
                     if "usb:" in line:
                         return line.split()[0]
@@ -154,8 +154,8 @@ def create_camera_controller(config: Dict[str, Any]) -> CameraController:
 if __name__ == "__main__":
     # Example configuration
     config = {
-        \'camera_type\': \'dslr\',  # Only DSLR supported now
-        \'image_directory\': \'./images\',
+        'camera_type': 'dslr',  # Only DSLR supported now
+        'image_directory': './images',
     }
     
     try:
@@ -174,5 +174,3 @@ if __name__ == "__main__":
     except Exception as e:
         logger.error(f"Error in camera test: {e}")
         print(f"Error: {e}")
-
-
